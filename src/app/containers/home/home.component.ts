@@ -10,6 +10,7 @@ import {
   Record,
   Task,
 } from '../../models/firebase-entities.model';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-home',
@@ -22,33 +23,51 @@ export class HomeComponent implements OnInit {
   /**
    * company fields
    */
-  company_search: FormControl = new FormControl('');
   company: Company;
   companies$: Observable<Company[]> = FirebaseApisService.getCompanies(
-    this.company_search.value
+    (this.company || {}).title
   );
-  companyTermChanged() {
-    this.companies$ = FirebaseApisService.getCompanies(
-      this.company_search.value
+  companyTermChanged(value: string) {
+    this.companies$ = FirebaseApisService.getCompanies(value);
+  }
+  companySelected(company: Company) {
+    this.company = company;
+    // update projects
+    this.projects$ = FirebaseApisService.getProjects(
+      (this.project || {}).name,
+      (this.company || {}).id || 0
     );
   }
 
   /**
    * project fields
    */
-  project_search: FormControl = new FormControl('');
+  project: Project;
   projects$: Observable<Project[]> = FirebaseApisService.getProjects(
-    this.project_search.value,
-    0
+    (this.project || {}).name,
+    (this.company || {}).id || 0
   );
-  projectTermChanged() {
-    this.companies$.subscribe((obs) => {
-
-    });
+  projectTermChanged(value: string) {
     this.projects$ = FirebaseApisService.getProjects(
-      this.project_search.value,
-      0
+      value,
+      (this.company || {}).id || 0
     );
+  }
+  projectSelected(project: Project) {
+    this.project = project;
+  }
+
+
+  /**
+   * task fields
+   */
+  task: Task;
+  tasks$: Observable<Task[]> = FirebaseApisService.getTasks((this.task || {}).name);
+  taskTermChanged(value: string) {
+    this.tasks$ = FirebaseApisService.getTasks(value);
+  }
+  taskSelected(task: Task) {
+    this.task = task;
   }
 
   ngOnInit(): void {}

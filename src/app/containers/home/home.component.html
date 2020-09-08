@@ -5,20 +5,9 @@
         <div class="row">
           <div class="col-md-4">
             <mat-form-field class="example-full-width">
-              <input
-                type="text"
-                placeholder="Company"
-                aria-label="Number"
-                matInput
-                (input)="companyTermChanged()"
-                [formControl]="company_search"
-                [matAutocomplete]="companiesAuto"
-              />
+              <input type="text" placeholder="Company" aria-label="Number" matInput (input)="companyTermChanged($event.target.value)" [matAutocomplete]="companiesAuto" />
               <mat-autocomplete #companiesAuto="matAutocomplete">
-                <mat-option
-                  *ngFor="let option of companies$ | async"
-                  [value]="option.title"
-                >
+                <mat-option *ngFor="let option of companies$ | async" [value]="option.title" (onSelectionChange)="companySelected(option)">
                   {{ option.title }}
                 </mat-option>
               </mat-autocomplete>
@@ -26,20 +15,19 @@
           </div>
           <div class="col-md-4">
             <mat-form-field class="example-full-width">
-              <input
-                type="text"
-                placeholder="Project"
-                aria-label="Number"
-                matInput
-                (input)="projectTermChanged()"
-                [formControl]="project_search"
-                [matAutocomplete]="projectsAuto"
-              />
+              <input type="text" placeholder="Project" aria-label="Number" matInput (input)="projectTermChanged($event.target.value)" [matAutocomplete]="projectsAuto" />
               <mat-autocomplete #projectsAuto="matAutocomplete">
-                <mat-option
-                  *ngFor="let option of projects$ | async"
-                  [value]="option.name"
-                >
+                <mat-option *ngFor="let option of projects$ | async" [value]="option.name" (onSelectionChange)="projectSelected(option)">
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Task" aria-label="Number" matInput (input)="taskTermChanged($event.target.value)" [matAutocomplete]="tasksAuto" />
+              <mat-autocomplete #tasksAuto="matAutocomplete">
+                <mat-option *ngFor="let option of tasks$ | async" [value]="option.name" (onSelectionChange)="taskSelected(option)">
                   {{ option.name }}
                 </mat-option>
               </mat-autocomplete>

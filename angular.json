@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "AngularFireBaseTaskManagement"
+  "defaultProject": "AngularFireBaseTaskManagement",
+  "cli": {
+    "analytics": "0bcc0b74-caf8-443f-b650-19eb0d4c8f0c"
+  }
 }
