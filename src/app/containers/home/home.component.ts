@@ -4,7 +4,12 @@ import { Observable } from 'rxjs';
 import { FirebaseApisService } from '../../services/firebase-apis.service';
 
 // import models
-import { Company } from '../../models/company.model';
+import {
+  Company,
+  Project,
+  Record,
+  Task,
+} from '../../models/firebase-entities.model';
 
 @Component({
   selector: 'app-home',

@@ -3,7 +3,12 @@ import { Observable, forkJoin, from } from 'rxjs';
 import { combineAll, switchMap, mergeAll, concatAll } from 'rxjs/operators';
 import { componentFactoryName } from '@angular/compiler';
 // import models
-import { Company } from '../models/company.model';
+import {
+  Company,
+  Project,
+  Record,
+  Task,
+} from '../models/firebase-entities.model';
 
 @Injectable({
   providedIn: 'root',
