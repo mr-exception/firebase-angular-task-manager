@@ -7,19 +7,40 @@
             <mat-form-field class="example-full-width">
               <input
                 type="text"
-                placeholder="Pick one"
+                placeholder="Company"
                 aria-label="Number"
                 matInput
                 (input)="companyTermChanged()"
-                [formControl]="company"
-                [matAutocomplete]="auto"
+                [formControl]="company_search"
+                [matAutocomplete]="companiesAuto"
               />
-              <mat-autocomplete #auto="matAutocomplete">
+              <mat-autocomplete #companiesAuto="matAutocomplete">
                 <mat-option
                   *ngFor="let option of companies$ | async"
                   [value]="option.title"
                 >
                   {{ option.title }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input
+                type="text"
+                placeholder="Project"
+                aria-label="Number"
+                matInput
+                (input)="projectTermChanged()"
+                [formControl]="project_search"
+                [matAutocomplete]="projectsAuto"
+              />
+              <mat-autocomplete #projectsAuto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of projects$ | async"
+                  [value]="option.name"
+                >
+                  {{ option.name }}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
