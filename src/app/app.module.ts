@@ -10,7 +10,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent],
@@ -23,6 +30,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -20,6 +20,29 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDMnkR--SiHPoW2LRgpr2gmsuSK6d70_FE",
+        authDomain: "angulartodolist-79d89.firebaseapp.com",
+        databaseURL: "https://angulartodolist-79d89.firebaseio.com",
+        projectId: "angulartodolist-79d89",
+        storageBucket: "angulartodolist-79d89.appspot.com",
+        messagingSenderId: "462127710851",
+        appId: "1:462127710851:web:bd559c35cf5bc36f78d1b6",
+        measurementId: "G-3M8NTF0E05",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
   </head>
   <body class="mat-typography">
     <app-root></app-root>
