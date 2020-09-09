@@ -116,10 +116,6 @@ export class FirebaseApisService {
           });
         })
       );
-    // return this.firestore.collection<Record>('records').valueChanges().pipe(
-    //   switchMap((record: Record) =>
-    //   this.getProject(record.projectId).pipe(map(project => {...record, project}))),
-    // );
   }
 
   public async saveRecord(record: Record) {
