@@ -2,7 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 
-let is_logged_in = false;
+let is_logged_in: boolean = false;
+let email: string;
 @Injectable()
 export class AuthGuardService implements CanActivate {
   constructor(private router: Router) {}
@@ -11,8 +12,17 @@ export class AuthGuardService implements CanActivate {
     else return true;
   }
 
-  setUser(user) {
+  setUser(user: firebase.User) {
     is_logged_in = true;
+    email = user.email;
     this.router.navigate(['home']);
+  }
+  logout() {
+    is_logged_in = false;
+    email = null;
+  }
+
+  getEmail(): string {
+    return email;
   }
 }

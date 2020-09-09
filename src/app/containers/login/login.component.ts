@@ -6,7 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { Router } from '@angular/router';
-import { auth } from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -40,8 +39,10 @@ export class LoginComponent implements OnInit {
         this.email.value,
         this.password.value
       );
-      this.authGaurd.setUser(response);
-      this.snackBar.open('login was successful', null, { duration: 5000 });
+      this.authGaurd.setUser(response.user);
+      this.snackBar.open(`hello ${response.user.email}`, null, {
+        duration: 5000,
+      });
     } catch (e) {
       this.snackBar.open('login failed!', null, { duration: 5000 });
     }

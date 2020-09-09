@@ -23,15 +23,17 @@ import { FormControl, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   public firebaseApi: FirebaseApisService;
   public drawerIsOpen = false;
-  public toggleDrawer() {
-    console.log(this.drawerIsOpen);
+  public logout() {
+    this.authGaurd.logout();
+    this.router.navigate(['']);
   }
   // private authGaurd: AuthGuardService = new AuthGuardService(this.router);
 
   constructor(
     auth: AngularFireAuth,
     firestore: AngularFirestore,
-    authGaurd: AuthGuardService
+    public authGaurd: AuthGuardService,
+    public router: Router
   ) {
     this.firebaseApi = new FirebaseApisService(auth, firestore);
 
