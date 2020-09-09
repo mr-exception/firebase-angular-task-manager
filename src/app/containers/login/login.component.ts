@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   private firebaseApi: FirebaseApisService;
-  constructor(public auth: AngularFireAuth, private snackBar: MatSnackBar) {
-    this.firebaseApi = new FirebaseApisService(auth);
+  constructor(
+    auth: AngularFireAuth,
+    firestore: AngularFirestore,
+    private snackBar: MatSnackBar
+  ) {
+    this.firebaseApi = new FirebaseApisService(auth, firestore);
   }
 
   email: FormControl = new FormControl('', [

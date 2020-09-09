@@ -10,6 +10,7 @@ import {
   Task,
 } from '../../models/firebase-entities.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -18,11 +19,16 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class HomeComponent implements OnInit {
   private firebaseApi: FirebaseApisService;
-  constructor(public auth: AngularFireAuth) {
-    this.firebaseApi = new FirebaseApisService(auth);
+  constructor(auth: AngularFireAuth, firestore: AngularFirestore) {
+    this.firebaseApi = new FirebaseApisService(auth, firestore);
 
     // fill default deta
     this.companies$ = this.firebaseApi.getCompanies((this.company || {}).title);
+    this.firebaseApi
+      .getCompanies((this.company || {}).title)
+      .subscribe((obs) => {
+        console.log(obs);
+      });
     this.projects$ = this.firebaseApi.getProjects(
       (this.project || {}).name,
       (this.company || {}).id || 0
