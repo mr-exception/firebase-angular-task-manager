@@ -13,6 +13,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ import { AuthGuardService } from 'src/app/services/auth-guard.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  private firebaseApi: FirebaseApisService;
+  public firebaseApi: FirebaseApisService;
   // private authGaurd: AuthGuardService = new AuthGuardService(this.router);
 
   constructor(
@@ -32,16 +33,12 @@ export class HomeComponent implements OnInit {
 
     // fill default deta
     this.companies$ = this.firebaseApi.getCompanies((this.company || {}).title);
-    this.firebaseApi
-      .getCompanies((this.company || {}).title)
-      .subscribe((obs) => {
-        console.log(obs);
-      });
     this.projects$ = this.firebaseApi.getProjects(
       (this.project || {}).name,
       (this.company || {}).id || 0
     );
     this.tasks$ = this.firebaseApi.getTasks((this.task || {}).name);
+    this.records$ = this.firebaseApi.getRecords();
   }
 
   /**
@@ -55,6 +52,11 @@ export class HomeComponent implements OnInit {
   companySelected(company: Company) {
     this.company = company;
     // update projects
+    this.firebaseApi
+      .getProjects((this.project || {}).name, (this.company || {}).id || 0)
+      .subscribe((obs) => {
+        console.log(obs);
+      });
     this.projects$ = this.firebaseApi.getProjects(
       (this.project || {}).name,
       (this.company || {}).id || 0
@@ -88,5 +90,25 @@ export class HomeComponent implements OnInit {
     this.task = task;
   }
 
-  ngOnInit(): void {}
+  hours: FormControl = new FormControl('', [Validators.required]);
+
+  records$: Observable<Record[]>;
+  records: Record[] = [];
+  records_loading: string = 'loading';
+  async submit() {
+    await this.firebaseApi.saveRecord({
+      projectId: this.project.id,
+      taskId: this.task.id,
+      hours: this.hours.value,
+    });
+  }
+  ngOnInit() {
+    this.records$.subscribe((records) => {
+      console.log(records);
+      this.records = records.map((record) => {
+        return { ...record, project: { title: 'test' } };
+      });
+      this.records_loading = 'loaded';
+    });
+  }
 }

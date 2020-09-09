@@ -1,30 +1,21 @@
-export class Company {
-  constructor(
-    public id: number,
-    public title: string,
-    public description: string
-  ) {}
+export interface Company {
+  id: number;
+  title: string;
+  description: string;
 }
-export class Project {
-  constructor(
-    public id: number,
-    public name: string,
-    public description: string,
-    public companyId: number,
-    public tasks: Task[] = []
-  ) {}
+export interface Project {
+  id: number;
+  name: string;
+  description: string;
+  companyId: number;
 }
-export class Record {
-  constructor(
-    public projectId: number,
-    public taskId: number,
-    public hours: number
-  ) {}
+export interface Record {
+  projectId: number;
+  taskId: number;
+  hours: number;
 }
 export class Task {
-  constructor(
-    public id: number,
-    public name: string,
-    public description: string
-  ) {}
+  id: number;
+  name: string;
+  description: string;
 }

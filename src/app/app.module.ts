@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatTableModule } from '@angular/material/table';
 import { environment } from '../environments/environment';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NotFoundComponent } from './containers/not-found/not-found.component';
@@ -41,6 +42,7 @@ import { NotFoundComponent } from './containers/not-found/not-found.component';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
+    MatTableModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
