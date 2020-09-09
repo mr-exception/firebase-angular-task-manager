@@ -4,6 +4,9 @@ import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthGuardService } from '../../services/auth-guard.service';
+import { Router } from '@angular/router';
+import { auth } from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +15,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class LoginComponent implements OnInit {
   private firebaseApi: FirebaseApisService;
+  private authGaurd: AuthGuardService = new AuthGuardService(this.router);
   constructor(
     auth: AngularFireAuth,
     firestore: AngularFirestore,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.firebaseApi = new FirebaseApisService(auth, firestore);
   }
@@ -35,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.email.value,
         this.password.value
       );
-      console.log(response);
+      this.authGaurd.setUser(response);
       this.snackBar.open('login was successful', null, { duration: 5000 });
     } catch (e) {
       this.snackBar.open('login failed!', null, { duration: 5000 });

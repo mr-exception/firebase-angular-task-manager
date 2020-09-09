@@ -11,6 +11,8 @@ import {
 } from '../../models/firebase-entities.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,13 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class HomeComponent implements OnInit {
   private firebaseApi: FirebaseApisService;
-  constructor(auth: AngularFireAuth, firestore: AngularFirestore) {
+  // private authGaurd: AuthGuardService = new AuthGuardService(this.router);
+
+  constructor(
+    auth: AngularFireAuth,
+    firestore: AngularFirestore,
+    authGaurd: AuthGuardService
+  ) {
     this.firebaseApi = new FirebaseApisService(auth, firestore);
 
     // fill default deta
