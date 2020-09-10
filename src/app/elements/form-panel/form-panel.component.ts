@@ -1,8 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { Company, Project, Task } from 'src/app/models/firebase-entities.model';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-form-panel',
@@ -10,15 +14,9 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./form-panel.component.scss'],
 })
 export class FormPanelComponent implements OnInit {
-  @Input() firebaseApi: FirebaseApisService;
-  constructor() {
-    // fill default deta
-    this.companies$ = this.firebaseApi.getCompanies((this.company || {}).title);
-    this.projects$ = this.firebaseApi.getProjects(
-      (this.project || {}).name,
-      (this.company || {}).id || 0
-    );
-    this.tasks$ = this.firebaseApi.getTasks((this.task || {}).name);
+  public firebaseApi: FirebaseApisService;
+  constructor(auth: AngularFireAuth, firestore: AngularFirestore) {
+    this.firebaseApi = new FirebaseApisService(auth, firestore);
   }
   /**
    * company fields
@@ -78,5 +76,13 @@ export class FormPanelComponent implements OnInit {
       hours: this.hours.value,
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // fill default deta
+    this.companies$ = this.firebaseApi.getCompanies((this.company || {}).title);
+    this.projects$ = this.firebaseApi.getProjects(
+      (this.project || {}).name,
+      (this.company || {}).id || 0
+    );
+    this.tasks$ = this.firebaseApi.getTasks((this.task || {}).name);
+  }
 }
