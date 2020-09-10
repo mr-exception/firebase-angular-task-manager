@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-md-12">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="full-width">
+              <input
+                type="text"
+                placeholder="Company"
+                aria-label="Number"
+                matInput
+                (input)="companyTermChanged($event.target.value)"
+                [matAutocomplete]="companiesAuto"
+              />
+              <mat-autocomplete #companiesAuto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of companies$ | async"
+                  [value]="option.title"
+                  (onSelectionChange)="companySelected(option)"
+                >
+                  {{ option.title }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="full-width">
+              <input
+                type="text"
+                placeholder="Project"
+                aria-label="Number"
+                matInput
+                (input)="projectTermChanged($event.target.value)"
+                [matAutocomplete]="projectsAuto"
+              />
+              <mat-autocomplete #projectsAuto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of projects$ | async"
+                  [value]="option.name"
+                  (onSelectionChange)="projectSelected(option)"
+                >
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="full-width">
+              <input
+                type="text"
+                placeholder="Task"
+                aria-label="Number"
+                matInput
+                (input)="taskTermChanged($event.target.value)"
+                [matAutocomplete]="tasksAuto"
+              />
+              <mat-autocomplete #tasksAuto="matAutocomplete">
+                <mat-option
+                  *ngFor="let option of tasks$ | async"
+                  [value]="option.name"
+                  (onSelectionChange)="taskSelected(option)"
+                >
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field appearance="legacy" class="full-width">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                placeholder="hours"
+                [formControl]="hours"
+                type="number"
+              />
+              <mat-icon matSuffix>{{
+                hours.valid
+                  ? "sentiment_very_satisfied"
+                  : "sentiment_very_dissatisfied"
+              }}</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="submit()">
+          submit
+        </button></mat-card-actions
+      >
+    </mat-card>
+  </div>
+</div>
