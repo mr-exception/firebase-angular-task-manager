@@ -24,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
 import { environment } from '../environments/environment';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NotFoundComponent } from './containers/not-found/not-found.component';
+import { NavBarComponent } from './elements/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { NotFoundComponent } from './containers/not-found/not-found.component';
     HomeComponent,
     NotFoundComponent,
     NotFoundComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

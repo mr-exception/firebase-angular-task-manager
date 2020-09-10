@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    (click)="sidenav.toggle()"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Angular/Firebase Task Manager</span>
+  <span class="example-spacer"></span>
+  <span>{{ authGaurd.getEmail() }}</span>
+</mat-toolbar>
+<mat-drawer-container class="example-container">
+  <mat-drawer style="width: 200px" mode="side" #sidenav
+    ><mat-list>
+      <mat-list-item (click)="logout()" class="pointer-cursor">
+        <mat-icon>lock</mat-icon>
+        <h3 matLine>logout</h3>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

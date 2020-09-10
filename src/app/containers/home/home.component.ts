@@ -22,7 +22,6 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   public firebaseApi: FirebaseApisService;
-  public drawerIsOpen = false;
   public logout() {
     this.authGaurd.logout();
     this.router.navigate(['']);
