@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../../../environments/environment';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { RouterModule } from '@angular/router';
 import { routes } from '../../app-routing.module';
 import { HomeComponent } from './home.component';

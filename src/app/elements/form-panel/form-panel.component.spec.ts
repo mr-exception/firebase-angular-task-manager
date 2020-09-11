@@ -5,7 +5,6 @@ import { AngularFireModule } from '@angular/fire';
 
 describe('FormPanelComponent', () => {
   let component: FormPanelComponent;
-  let fixture: ComponentFixture<FormPanelComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FormPanelComponent],
@@ -15,7 +14,36 @@ describe('FormPanelComponent', () => {
     component = TestBed.inject(FormPanelComponent);
   }));
   it('should create', () => {
-    // component = TestBed.get
     expect(component).toBeTruthy();
+  });
+  it('should company term change', (done) => {
+    component.companyTermChanged('');
+    done();
+  });
+  it('should company selected', (done) => {
+    component.firebaseApi.getCompanies('').subscribe((companies) => {
+      component.companySelected(companies[0]);
+      done();
+    });
+  });
+  it('should project term change', (done) => {
+    component.projectTermChanged('');
+    done();
+  });
+  it('should project selected', (done) => {
+    component.firebaseApi.getProjects('', 0).subscribe((projects) => {
+      component.projectSelected(projects[0]);
+      done();
+    });
+  });
+  it('should task term change', (done) => {
+    component.taskTermChanged('');
+    done();
+  });
+  it('should task selected', (done) => {
+    component.firebaseApi.getTasks('').subscribe((tasks) => {
+      component.taskSelected(tasks[0]);
+      done();
+    });
   });
 });
