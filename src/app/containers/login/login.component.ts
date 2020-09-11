@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { Router } from '@angular/router';
+import { auth } from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -32,13 +33,9 @@ export class LoginComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
-
   async login() {
     try {
-      const response = await this.firebaseApi.login(
-        this.email.value,
-        this.password.value
-      );
+      const response = await this.checkAuthInformations();
       this.authGaurd.setUser(response.user);
       this.snackBar.open(`hello ${response.user.email}`, null, {
         duration: 5000,
@@ -46,6 +43,20 @@ export class LoginComponent implements OnInit {
     } catch (e) {
       this.snackBar.open('login failed!', null, { duration: 5000 });
     }
+  }
+
+  async checkAuthInformations() {
+    return new Promise<auth.UserCredential>(async (resolve, reject) => {
+      try {
+        const response = await this.firebaseApi.login(
+          this.email.value,
+          this.password.value
+        );
+        resolve(response);
+      } catch (e) {
+        reject();
+      }
+    });
   }
 
   ngOnInit(): void {}
