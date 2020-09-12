@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+/**
+ * this compopnent is a form to create a new record
+ */
+import { Component, OnInit } from '@angular/core';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { Company, Project, Task } from 'src/app/models/firebase-entities.model';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { AuthGuardService } from 'src/app/services/auth-guard.service';
-import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 

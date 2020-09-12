@@ -1,3 +1,6 @@
+/**
+ * these interfaces are for firestore entities and their properties
+ */
 export interface Company {
   id: number;
   title: string;

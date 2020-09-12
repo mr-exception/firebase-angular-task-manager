@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+/**
+ * this component is the home page with a list of records
+ */
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FirebaseApisService } from '../../services/firebase-apis.service';
 

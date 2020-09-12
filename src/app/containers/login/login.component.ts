@@ -1,3 +1,6 @@
+/**
+ * this component is the login page with login inputs
+ */
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';

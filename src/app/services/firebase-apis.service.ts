@@ -1,31 +1,18 @@
+/**
+ * this component is service to provice methods for
+ * comunicating with firebase service
+ */
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, from, zip, combineLatest, generate } from 'rxjs';
-import {
-  combineAll,
-  switchMap,
-  filter,
-  concatAll,
-  exhaust,
-  map,
-  pairwise,
-  buffer,
-  bufferCount,
-  first,
-} from 'rxjs/operators';
-import { componentFactoryName } from '@angular/compiler';
+import { Observable } from 'rxjs';
+import { exhaust, map, first } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
-// import models
 import {
   Company,
   Project,
   Record,
   Task,
 } from '../models/firebase-entities.model';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,8 @@
-// src/app/auth/auth-guard.service.ts
+/**
+ * authgaurd is a class that implements the canActives() method
+ * to use in routes. this guard also contains login and login methods
+ * with holding informations from user to show in navbar component
+ */
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 
