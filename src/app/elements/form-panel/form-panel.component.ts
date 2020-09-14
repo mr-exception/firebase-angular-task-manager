@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form-panel',
@@ -15,7 +16,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./form-panel.component.scss'],
 })
 export class FormPanelComponent implements OnInit {
-  constructor(public firebaseApi: FirebaseApisService) {}
+  constructor(
+    public firebaseApi: FirebaseApisService,
+    public snackBar: MatSnackBar
+  ) {}
   /**
    * company fields
    */
@@ -67,12 +71,32 @@ export class FormPanelComponent implements OnInit {
 
   hours: FormControl = new FormControl('', [Validators.required]);
 
-  async submit() {
-    await this.firebaseApi.saveRecord({
-      projectId: this.project.id,
-      taskId: this.task.id,
-      hours: this.hours.value,
-    });
+  submit() {
+    if (!this.project)
+      return this.snackBar.open(`please choose a project`, null, {
+        duration: 5000,
+      });
+    if (!this.task)
+      return this.snackBar.open(`please choose a task`, null, {
+        duration: 5000,
+      });
+    if (!this.hours.valid)
+      return this.snackBar.open(
+        `please define the hours spent on this task`,
+        null,
+        {
+          duration: 5000,
+        }
+      );
+    this.firebaseApi
+      .saveRecord({
+        projectId: this.project.id,
+        taskId: this.task.id,
+        hours: this.hours.value,
+      })
+      .subscribe((obs) => {
+        console.log(obs);
+      });
   }
   ngOnInit(): void {
     // fill default deta

@@ -85,7 +85,12 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="submit()">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="submit()"
+          [disabled]="!this.hours.valid"
+        >
           submit
         </button></mat-card-actions
       >

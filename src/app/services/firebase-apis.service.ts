@@ -12,7 +12,7 @@ import {
   Record,
   Task,
 } from '../models/firebase-entities.model';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -104,9 +104,12 @@ export class FirebaseApisService {
         })
       );
   }
-
-  public async saveRecord(record: Record) {
-    return this.firestore.collection('records').add(record);
+  /**
+   * inserts a new record in records collection
+   * @param record
+   */
+  public saveRecord(record: Record): Observable<DocumentReference> {
+    return from(this.firestore.collection('records').add(record));
   }
 
   /**

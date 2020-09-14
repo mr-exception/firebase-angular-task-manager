@@ -7,10 +7,6 @@ import { FirebaseApisService } from '../../services/firebase-apis.service';
 
 // import models
 import { Record } from '../../models/firebase-entities.model';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import { AuthGuardService } from 'src/app/services/auth-guard.service';
 
 @Component({
   selector: 'app-home',
@@ -18,11 +14,7 @@ import { AuthGuardService } from 'src/app/services/auth-guard.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(
-    public firebaseApi: FirebaseApisService,
-    public authGaurd: AuthGuardService,
-    public router: Router
-  ) {
+  constructor(public firebaseApi: FirebaseApisService) {
     this.records$ = this.firebaseApi.getRecords();
   }
 

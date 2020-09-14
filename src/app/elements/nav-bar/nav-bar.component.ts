@@ -4,7 +4,6 @@
  * in sidenav we have a button to logout
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { Router } from '@angular/router';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 
@@ -14,9 +13,7 @@ import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit {
-  @Input() authGaurd: AuthGuardService;
-  @Input() router: Router;
-  constructor(public firebaseApi: FirebaseApisService) {}
+  constructor(public firebaseApi: FirebaseApisService, public router: Router) {}
   public logout() {
     this.firebaseApi.logout();
     this.router.navigate(['']);
