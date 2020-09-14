@@ -10,6 +10,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthGuardService } from '../../services/auth-guard.service';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -18,10 +19,13 @@ import { auth } from 'firebase';
 })
 export class LoginComponent implements OnInit {
   private firebaseApi: FirebaseApisService;
-  private authGaurd: AuthGuardService = new AuthGuardService(this.router);
+  private authGaurd: AuthGuardService = new AuthGuardService(
+    this.router,
+    this.auth
+  );
   constructor(
-    auth: AngularFireAuth,
-    firestore: AngularFirestore,
+    private auth: AngularFireAuth,
+    private firestore: AngularFirestore,
     private snackBar: MatSnackBar,
     private router: Router
   ) {
@@ -36,31 +40,44 @@ export class LoginComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
-  async login() {
-    try {
-      const response = await this.checkAuthInformations();
-      this.authGaurd.setUser(response.user);
-      this.snackBar.open(`hello ${response.user.email}`, null, {
-        duration: 5000,
+  /**
+   * login to firebase with email && password inputs
+   * prepared from component inputs
+   */
+  login() {
+    this.firebaseApi
+      .login(this.email.value, this.password.value)
+      .subscribe((result: boolean) => {
+        console.log(result);
+        if (result) {
+          // login progress done! fetch user email and show a toast
+          this.snackBar.open(
+            `hello ${this.firebaseApi.authInformation.email}`,
+            null,
+            {
+              duration: 5000,
+            }
+          );
+        } else {
+          // login progress failed! show a failure toast
+          this.snackBar.open('login failed!', null, { duration: 5000 });
+        }
       });
-    } catch (e) {
-      this.snackBar.open('login failed!', null, { duration: 5000 });
-    }
   }
 
-  async checkAuthInformations() {
-    return new Promise<auth.UserCredential>(async (resolve, reject) => {
-      try {
-        const response = await this.firebaseApi.login(
-          this.email.value,
-          this.password.value
-        );
-        resolve(response);
-      } catch (e) {
-        reject();
-      }
-    });
-  }
+  // checkAuthInformations() {
+  //   return new Promise<auth.UserCredential>(async (resolve, reject) => {
+  //     try {
+  //       const response = await this.firebaseApi.login(
+  //         this.email.value,
+  //         this.password.value
+  //       );
+  //       resolve(response);
+  //     } catch (e) {
+  //       reject();
+  //     }
+  //   });
+  // }
 
   ngOnInit(): void {}
 }

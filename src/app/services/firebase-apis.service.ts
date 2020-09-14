@@ -3,8 +3,8 @@
  * comunicating with firebase service
  */
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { exhaust, map, first } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { exhaust, map, first, catchError } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   Company,
@@ -108,7 +108,30 @@ export class FirebaseApisService {
   public async saveRecord(record: Record) {
     return this.firestore.collection('records').add(record);
   }
-  public async login(email: string, password: string) {
-    return this.auth.signInWithEmailAndPassword(email, password);
+
+  /**
+   * ==========================================================================================
+   * auth methods
+   * ==========================================================================================
+   */
+  authInformation: firebase.User;
+  /**
+   * login to firebase auth service
+   * @param email
+   * @param password
+   */
+  public login(email: string, password: string) {
+    return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
+      catchError((response) => of(false)), // in case of invalid information
+      map((response: firebase.auth.UserCredential): boolean => {
+        if (!response) {
+          this.authInformation = null;
+          return false;
+        } else {
+          this.authInformation = response.user;
+          return true;
+        }
+      })
+    );
   }
 }
