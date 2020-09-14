@@ -26,6 +26,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { NotFoundComponent } from './containers/not-found/not-found.component';
 import { NavBarComponent } from './elements/nav-bar/nav-bar.component';
 import { FormPanelComponent } from './elements/form-panel/form-panel.component';
+import { FirebaseApisService } from './services/firebase-apis.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { FormPanelComponent } from './elements/form-panel/form-panel.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [AuthGuardService],
+  providers: [AuthGuardService, FirebaseApisService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

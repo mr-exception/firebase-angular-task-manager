@@ -15,10 +15,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./form-panel.component.scss'],
 })
 export class FormPanelComponent implements OnInit {
-  public firebaseApi: FirebaseApisService;
-  constructor(auth: AngularFireAuth, firestore: AngularFirestore) {
-    this.firebaseApi = new FirebaseApisService(auth, firestore);
-  }
+  constructor(public firebaseApi: FirebaseApisService) {}
   /**
    * company fields
    */

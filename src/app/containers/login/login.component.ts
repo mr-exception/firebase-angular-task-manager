@@ -18,19 +18,11 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  private firebaseApi: FirebaseApisService;
-  private authGaurd: AuthGuardService = new AuthGuardService(
-    this.router,
-    this.auth
-  );
   constructor(
-    private auth: AngularFireAuth,
-    private firestore: AngularFirestore,
     private snackBar: MatSnackBar,
-    private router: Router
-  ) {
-    this.firebaseApi = new FirebaseApisService(auth, firestore);
-  }
+    private router: Router,
+    private firebaseApi: FirebaseApisService
+  ) {}
 
   email: FormControl = new FormControl('', [
     Validators.required,

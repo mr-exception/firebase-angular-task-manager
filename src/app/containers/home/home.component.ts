@@ -18,15 +18,11 @@ import { AuthGuardService } from 'src/app/services/auth-guard.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public firebaseApi: FirebaseApisService;
-
   constructor(
-    auth: AngularFireAuth,
-    firestore: AngularFirestore,
+    public firebaseApi: FirebaseApisService,
     public authGaurd: AuthGuardService,
     public router: Router
   ) {
-    this.firebaseApi = new FirebaseApisService(auth, firestore);
     this.records$ = this.firebaseApi.getRecords();
   }
 
