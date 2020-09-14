@@ -1,7 +1,7 @@
 /**
  * this component is the login page with login inputs
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { FormControl, Validators } from '@angular/forms';
@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
     this.firebaseApi
       .login(this.email.value, this.password.value)
       .subscribe((result: boolean) => {
-        console.log(result);
         if (result) {
           // login progress done! fetch user email and show a toast
           this.snackBar.open(
@@ -58,6 +57,7 @@ export class LoginComponent implements OnInit {
               duration: 5000,
             }
           );
+          this.router.navigate(['home']);
         } else {
           // login progress failed! show a failure toast
           this.snackBar.open('login failed!', null, { duration: 5000 });

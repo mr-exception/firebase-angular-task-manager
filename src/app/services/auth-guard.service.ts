@@ -17,9 +17,7 @@ export class AuthGuardService implements CanActivate {
   }
   private userInformation: firebase.User = null;
   canActivate(): boolean {
-    if (this.userInformation !== null) return true;
-    this.router.navigate(['']);
-    return false;
+    return this.angularAuth.authState;
   }
 
   logout() {
