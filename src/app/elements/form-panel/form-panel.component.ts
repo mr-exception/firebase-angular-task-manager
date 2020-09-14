@@ -30,12 +30,8 @@ export class FormPanelComponent implements OnInit {
   }
   companySelected(company: Company) {
     this.company = company;
+    this.companies$ = this.firebaseApi.getCompanies(company.title);
     // update projects
-    this.firebaseApi
-      .getProjects((this.project || {}).name, (this.company || {}).id || 0)
-      .subscribe((obs) => {
-        console.log(obs);
-      });
     this.projects$ = this.firebaseApi.getProjects(
       (this.project || {}).name,
       (this.company || {}).id || 0
@@ -55,6 +51,10 @@ export class FormPanelComponent implements OnInit {
   }
   projectSelected(project: Project) {
     this.project = project;
+    this.projects$ = this.firebaseApi.getProjects(
+      project.name,
+      (this.company || {}).id || 0
+    );
   }
 
   /**
@@ -67,6 +67,7 @@ export class FormPanelComponent implements OnInit {
   }
   taskSelected(task: Task) {
     this.task = task;
+    this.tasks$ = this.firebaseApi.getTasks(task.name);
   }
 
   hours: FormControl = new FormControl('', [Validators.required]);
