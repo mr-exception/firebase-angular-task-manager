@@ -120,7 +120,7 @@ export class FirebaseApisService {
    * @param email
    * @param password
    */
-  public login(email: string, password: string) {
+  public login(email: string, password: string): Observable<boolean> {
     return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(
       catchError((response) => of(false)), // in case of invalid information
       map((response: firebase.auth.UserCredential): boolean => {
@@ -133,5 +133,8 @@ export class FirebaseApisService {
         }
       })
     );
+  }
+  public logout(): Observable<void> {
+    return from(this.auth.signOut());
   }
 }

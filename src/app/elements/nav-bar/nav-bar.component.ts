@@ -6,6 +6,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { Router } from '@angular/router';
+import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,8 +16,9 @@ import { Router } from '@angular/router';
 export class NavBarComponent implements OnInit {
   @Input() authGaurd: AuthGuardService;
   @Input() router: Router;
+  constructor(public firebaseApi: FirebaseApisService) {}
   public logout() {
-    this.authGaurd.logout();
+    this.firebaseApi.logout();
     this.router.navigate(['']);
   }
 
