@@ -4,7 +4,14 @@
  */
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { exhaust, map, first, catchError } from 'rxjs/operators';
+import {
+  exhaust,
+  map,
+  first,
+  catchError,
+  switchMap,
+  combineAll,
+} from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   Company,
@@ -93,12 +100,8 @@ export class FirebaseApisService {
       .pipe(
         map((records: Record[]) => {
           return records.map((record: Record) => {
-            this.getProject(record.projectId).subscribe((project: Project) => {
-              record['projectName'] = project.name;
-            });
-            this.getTask(record.taskId).subscribe((task: Task) => {
-              record['taskName'] = task.name;
-            });
+            record['project'] = this.getProject(record.projectId);
+            record['task'] = this.getTask(record.taskId);
             return record;
           });
         })
