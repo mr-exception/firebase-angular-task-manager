@@ -28,30 +28,30 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should login fail', (done) => {
-    component.email.setValue('wrong@mail.com');
-    component.password.setValue('wrongpassword');
-    component
-      .checkAuthInformations()
-      .then((result) => {
-        expect(result).toBeTruthy();
-        done();
-      })
-      .catch((error) => {
-        done();
-      });
-  });
-  it('should login success', (done) => {
-    component.email.setValue('test@mail.com');
-    component.password.setValue('testpassword');
-    component
-      .checkAuthInformations()
-      .then((result) => {
-        expect(result).toBeTruthy();
-        done();
-      })
-      .catch((error) => {
-        done();
-      });
-  });
+  // it('should login fail', (done) => {
+  //   component.email.setValue('wrong@mail.com');
+  //   component.password.setValue('wrongpassword');
+  //   component
+  //     .checkAuthInformations()
+  //     .then((result) => {
+  //       expect(result).toBeTruthy();
+  //       done();
+  //     })
+  //     .catch((error) => {
+  //       done();
+  //     });
+  // });
+  // it('should login success', (done) => {
+  //   component.email.setValue('test@mail.com');
+  //   component.password.setValue('testpassword');
+  //   component
+  //     .checkAuthInformations()
+  //     .then((result) => {
+  //       expect(result).toBeTruthy();
+  //       done();
+  //     })
+  //     .catch((error) => {
+  //       done();
+  //     });
+  // });
 });

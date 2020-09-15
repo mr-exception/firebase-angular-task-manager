@@ -14,11 +14,7 @@ import { Record } from '../../models/firebase-entities.model';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(public firebaseApi: FirebaseApisService) {
-    this.firebaseApi.getRecords().subscribe((obs) => {
-      console.log(obs);
-    });
-  }
+  constructor(public firebaseApi: FirebaseApisService) {}
 
   records$: Observable<Record[]> = this.firebaseApi.getRecords();
   ngOnInit() {}
