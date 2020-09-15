@@ -89,15 +89,11 @@ export class FormPanelComponent implements OnInit {
           duration: 5000,
         }
       );
-    this.firebaseApi
-      .saveRecord({
-        projectId: this.project.id,
-        taskId: this.task.id,
-        hours: this.hours.value,
-      })
-      .subscribe((obs) => {
-        console.log(obs);
-      });
+    this.firebaseApi.saveRecord({
+      projectId: this.project.id,
+      taskId: this.task.id,
+      hours: this.hours.value,
+    });
   }
   ngOnInit(): void {
     // fill default deta
