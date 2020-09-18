@@ -120,11 +120,11 @@ export class FirebaseApisService {
         switchMap((records: Record[]) => {
           const projectIds = records.map((rc) => rc.projectId);
           const taskIds = records.map((rc) => rc.taskId);
-          return combineLatest(
+          return combineLatest([
             of(records),
             combineLatest(projectIds.map((pid) => this.getProject(pid))),
-            combineLatest(taskIds.map((tid) => this.getTask(tid)))
-          );
+            combineLatest(taskIds.map((tid) => this.getTask(tid))),
+          ]);
         }),
         map(([records, projects, tasks]) =>
           records.map((record) => ({
