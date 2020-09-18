@@ -3,8 +3,8 @@
  * comunicating with firebase service
  */
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { exhaust, map, first, catchError } from 'rxjs/operators';
+import { Observable, from, of, combineLatest } from 'rxjs';
+import { exhaust, map, first, catchError, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   Company,
@@ -117,13 +117,22 @@ export class FirebaseApisService {
       .collection<Record>('records')
       .valueChanges()
       .pipe(
-        map((records: Record[]) => {
-          return records.map((record: Record) => {
-            record['project'] = this.getProject(record.projectId);
-            record['task'] = this.getTask(record.taskId);
-            return record;
-          });
-        })
+        switchMap((records: Record[]) => {
+          const projectIds = records.map((rc) => rc.projectId);
+          const taskIds = records.map((rc) => rc.taskId);
+          return combineLatest(
+            of(records),
+            combineLatest(projectIds.map((pid) => this.getProject(pid))),
+            combineLatest(taskIds.map((tid) => this.getTask(tid)))
+          );
+        }),
+        map(([records, projects, tasks]) =>
+          records.map((record) => ({
+            ...record,
+            project: projects.find((p) => p.id === record.projectId),
+            task: tasks.find((p) => p.id === record.taskId),
+          }))
+        )
       );
   }
   /**
