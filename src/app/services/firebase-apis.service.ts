@@ -13,6 +13,7 @@ import {
   Task,
 } from '../models/firebase-entities.model';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { Sort } from '@angular/material/sort';
 
 @Injectable({
   providedIn: 'root',
@@ -112,9 +113,15 @@ export class FirebaseApisService {
   /**
    * this methods retrives the list of records on firebase
    */
-  public getRecords(): Observable<Record[]> {
+  public getRecords(sort: Sort = null): Observable<Record[]> {
     return this.firestore
-      .collection<Record>('records')
+      .collection<Record>('records', (ref) => {
+        if (sort && sort.direction !== '') {
+          return ref.orderBy(sort.active, sort.direction);
+        } else {
+          return ref;
+        }
+      })
       .valueChanges()
       .pipe(
         switchMap((records: Record[]) => {
