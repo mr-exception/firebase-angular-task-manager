@@ -48,8 +48,13 @@
             [disabled]="!email.valid || !password.valid"
           >
             login
-          </button></mat-card-actions
-        >
+          </button>
+          <mat-progress-bar
+            *ngIf="loginRequesting"
+            style="margin-top: 10px"
+            mode="indeterminate"
+          ></mat-progress-bar>
+        </mat-card-actions>
       </mat-card>
     </div>
   </div>

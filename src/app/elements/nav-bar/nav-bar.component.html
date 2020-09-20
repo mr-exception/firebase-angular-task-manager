@@ -11,13 +11,14 @@
   <span>{{ firebaseApi.authInformation.email }}</span>
 </mat-toolbar>
 <mat-drawer-container class="example-container">
-  <mat-drawer style="width: 200px" mode="side" #sidenav
-    ><mat-list>
-      <mat-list-item (click)="logout()" class="pointer-cursor">
+  <mat-drawer style="width: 200px" mode="side" #sidenav>
+    <mat-divider class="divider"></mat-divider>
+    <mat-action-list>
+      <button mat-list-item (click)="logout()" class="pointer-cursor">
         <mat-icon>lock</mat-icon>
         <h3 matLine>logout</h3>
-      </mat-list-item>
-    </mat-list>
+      </button>
+    </mat-action-list>
   </mat-drawer>
   <mat-drawer-content>
     <ng-content></ng-content>

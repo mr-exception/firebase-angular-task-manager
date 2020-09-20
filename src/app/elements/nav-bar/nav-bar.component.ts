@@ -15,8 +15,9 @@ import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 export class NavBarComponent implements OnInit {
   constructor(public firebaseApi: FirebaseApisService, public router: Router) {}
   public logout() {
-    this.firebaseApi.logout();
-    this.router.navigate(['']);
+    this.firebaseApi.logout().subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 
   ngOnInit(): void {}

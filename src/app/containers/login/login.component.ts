@@ -2,15 +2,10 @@
  * this component is the login page with login inputs
  */
 import { Component, OnInit, NgZone } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthGuardService } from '../../services/auth-guard.service';
 import { Router } from '@angular/router';
-import { auth } from 'firebase';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +31,15 @@ export class LoginComponent implements OnInit {
    * login to firebase with email && password inputs
    * prepared from component inputs
    */
+
+  loginRequesting: boolean = false;
   login() {
+    this.loginRequesting = true;
     this.firebaseApi
       .login(this.email.value, this.password.value)
       .subscribe((result: boolean) => {
         if (result) {
+          this.loginRequesting = false;
           // login progress done! fetch user email and show a toast
           this.snackBar.open(
             `hello ${this.firebaseApi.authInformation.email}`,
@@ -53,23 +52,10 @@ export class LoginComponent implements OnInit {
         } else {
           // login progress failed! show a failure toast
           this.snackBar.open('login failed!', null, { duration: 5000 });
+          this.loginRequesting = false;
         }
       });
   }
-
-  // checkAuthInformations() {
-  //   return new Promise<auth.UserCredential>(async (resolve, reject) => {
-  //     try {
-  //       const response = await this.firebaseApi.login(
-  //         this.email.value,
-  //         this.password.value
-  //       );
-  //       resolve(response);
-  //     } catch (e) {
-  //       reject();
-  //     }
-  //   });
-  // }
 
   ngOnInit(): void {}
 }

@@ -6,8 +6,6 @@ import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 import { Company, Project, Task } from 'src/app/models/firebase-entities.model';
 import { Observable } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
