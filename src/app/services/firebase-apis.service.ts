@@ -10,9 +10,15 @@ import {
   Company,
   Project,
   Record,
+  SaveRecord,
   Task,
 } from '../models/firebase-entities.model';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  DocumentChangeAction,
+  DocumentReference,
+} from '@angular/fire/firestore';
 import { Sort } from '@angular/material/sort';
 
 @Injectable({
@@ -114,16 +120,24 @@ export class FirebaseApisService {
    * this methods retrives the list of records on firebase
    */
   public getRecords(sort: Sort = null): Observable<Record[]> {
-    return this.firestore
-      .collection<Record>('records', (ref) => {
-        if (sort && sort.direction !== '') {
-          return ref.orderBy(sort.active, sort.direction);
-        } else {
-          return ref;
-        }
-      })
-      .valueChanges()
+    return (this.firestore.collection('records', (ref) => {
+      if (sort && sort.direction !== '') {
+        return ref.orderBy(sort.active, sort.direction);
+      } else {
+        return ref;
+      }
+    }) as AngularFirestoreCollection<Record>)
+      .snapshotChanges()
       .pipe(
+        catchError((err) => of([])),
+        map((actions) => {
+          return (actions as DocumentChangeAction<Record>[]).map((action) => {
+            const data = action.payload.doc.data() as Record;
+            const id = action.payload.doc.id;
+            const record = { id, ...data };
+            return record;
+          });
+        }),
         switchMap((records: Record[]) => {
           const projectIds = records.map((rc) => rc.projectId);
           const taskIds = records.map((rc) => rc.taskId);
@@ -146,8 +160,11 @@ export class FirebaseApisService {
    * inserts a new record in records collection
    * @param record
    */
-  public saveRecord(record: Record): Observable<DocumentReference> {
+  public saveRecord(record: SaveRecord): Observable<DocumentReference> {
     return from(this.firestore.collection('records').add(record));
+  }
+  public removeRecord(record: Record): Observable<void> {
+    return from(this.firestore.doc<Record>(`records/${record.id}`).delete());
   }
 
   /**

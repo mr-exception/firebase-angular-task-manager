@@ -24,12 +24,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 import { environment } from '../environments/environment';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NotFoundComponent } from './containers/not-found/not-found.component';
 import { NavBarComponent } from './elements/nav-bar/nav-bar.component';
 import { FormPanelComponent } from './elements/form-panel/form-panel.component';
 import { FirebaseApisService } from './services/firebase-apis.service';
+import { RemoveRecordDialogComponent } from './elements/remove-record-dialog/remove-record-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { FirebaseApisService } from './services/firebase-apis.service';
     NotFoundComponent,
     NavBarComponent,
     FormPanelComponent,
+    RemoveRecordDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { FirebaseApisService } from './services/firebase-apis.service';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatSortModule,
+    MatDialogModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
