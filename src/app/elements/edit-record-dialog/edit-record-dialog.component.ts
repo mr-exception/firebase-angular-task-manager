@@ -101,7 +101,8 @@ export class EditRecordDialogComponent implements OnInit {
         }
       );
     this.firebaseApi
-      .saveRecord({
+      .editRecord({
+        id: this.data.record.id,
         projectId: this.project.id,
         taskId: this.task.id,
         hours: this.hours.value,

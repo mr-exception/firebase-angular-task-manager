@@ -166,6 +166,9 @@ export class FirebaseApisService {
   public removeRecord(record: Record): Observable<void> {
     return from(this.firestore.doc<Record>(`records/${record.id}`).delete());
   }
+  public editRecord(record: Record): Observable<void> {
+    return from(this.firestore.doc<Record>(`records/${record.id}`).set(record));
+  }
 
   /**
    * ==========================================================================================
