@@ -32,6 +32,7 @@ import { NavBarComponent } from './elements/nav-bar/nav-bar.component';
 import { FormPanelComponent } from './elements/form-panel/form-panel.component';
 import { FirebaseApisService } from './services/firebase-apis.service';
 import { RemoveRecordDialogComponent } from './elements/remove-record-dialog/remove-record-dialog.component';
+import { EditRecordDialogComponent } from './elements/edit-record-dialog/edit-record-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RemoveRecordDialogComponent } from './elements/remove-record-dialog/rem
     NavBarComponent,
     FormPanelComponent,
     RemoveRecordDialogComponent,
+    EditRecordDialogComponent,
   ],
   imports: [
     BrowserModule,

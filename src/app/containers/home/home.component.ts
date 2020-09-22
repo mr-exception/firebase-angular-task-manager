@@ -10,6 +10,7 @@ import { Record } from '../../models/firebase-entities.model';
 import { Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveRecordDialogComponent } from 'src/app/elements/remove-record-dialog/remove-record-dialog.component';
+import { EditRecordDialogComponent } from 'src/app/elements/edit-record-dialog/edit-record-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,16 @@ export class HomeComponent implements OnInit {
   openRemoveDialog(record: Record) {
     const dialogRef = this.dialog.open(RemoveRecordDialogComponent, {
       width: '400px',
+      data: { record },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`The dialog was closed with result ${result}`);
+    });
+  }
+  openEditDialog(record: Record) {
+    const dialogRef = this.dialog.open(EditRecordDialogComponent, {
+      width: '700px',
       data: { record },
     });
 
