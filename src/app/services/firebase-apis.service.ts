@@ -163,9 +163,17 @@ export class FirebaseApisService {
   public saveRecord(record: SaveRecord): Observable<DocumentReference> {
     return from(this.firestore.collection('records').add(record));
   }
+  /**
+   * removes a record from records collection
+   * @param record
+   */
   public removeRecord(record: Record): Observable<void> {
     return from(this.firestore.doc<Record>(`records/${record.id}`).delete());
   }
+  /**
+   * updates the record in records collection based on record id
+   * @param record
+   */
   public editRecord(record: Record): Observable<void> {
     return from(this.firestore.doc<Record>(`records/${record.id}`).set(record));
   }
