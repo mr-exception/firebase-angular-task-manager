@@ -4,7 +4,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { Record } from 'src/app/models/firebase-entities.model';
+import { IRecord } from 'src/app/models/firebase-entities.model';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 
 @Component({
@@ -31,5 +31,5 @@ export class RemoveRecordDialogComponent implements OnInit {
 }
 
 export interface DialogData {
-  record: Record;
+  record: IRecord;
 }

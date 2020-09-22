@@ -8,10 +8,10 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import {
-  Company,
-  Project,
-  Record,
-  Task,
+  ICompany,
+  IProject,
+  IRecord,
+  ITask,
 } from 'src/app/models/firebase-entities.model';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
 
@@ -34,12 +34,12 @@ export class EditRecordDialogComponent implements OnInit {
   /**
    * company fields
    */
-  company: Company;
-  companies$: Observable<Company[]>;
+  company: ICompany;
+  companies$: Observable<ICompany[]>;
   companyTermChanged(value: string) {
     this.companies$ = this.firebaseApi.getCompanies(value);
   }
-  companySelected(company: Company) {
+  companySelected(company: ICompany) {
     this.company = company;
     this.companies$ = this.firebaseApi.getCompanies(company.title);
     // update projects
@@ -52,15 +52,15 @@ export class EditRecordDialogComponent implements OnInit {
   /**
    * project fields
    */
-  project: Project;
-  projects$: Observable<Project[]>;
+  project: IProject;
+  projects$: Observable<IProject[]>;
   projectTermChanged(value: string) {
     this.projects$ = this.firebaseApi.getProjects(
       value,
       (this.company || {}).id || 0
     );
   }
-  projectSelected(project: Project) {
+  projectSelected(project: IProject) {
     this.project = project;
     this.projects$ = this.firebaseApi.getProjects(
       project.name,
@@ -71,12 +71,12 @@ export class EditRecordDialogComponent implements OnInit {
   /**
    * task fields
    */
-  task: Task;
-  tasks$: Observable<Task[]>;
+  task: ITask;
+  tasks$: Observable<ITask[]>;
   taskTermChanged(value: string) {
     this.tasks$ = this.firebaseApi.getTasks(value);
   }
-  taskSelected(task: Task) {
+  taskSelected(task: ITask) {
     this.task = task;
     this.tasks$ = this.firebaseApi.getTasks(task.name);
   }
@@ -116,17 +116,17 @@ export class EditRecordDialogComponent implements OnInit {
     this.tasks$ = this.firebaseApi.getTasks((this.task || {}).name);
     this.firebaseApi
       .getProject(this.data.record.projectId)
-      .subscribe((project: Project) => {
+      .subscribe((project: IProject) => {
         this.projectSelected(project);
         this.firebaseApi
           .getCompany(project.companyId)
-          .subscribe((company: Company) => {
+          .subscribe((company: ICompany) => {
             this.companySelected(company);
           });
       });
     this.firebaseApi
       .getTask(this.data.record.taskId)
-      .subscribe((task: Task) => {
+      .subscribe((task: ITask) => {
         this.taskSelected(task);
       });
     this.hours.setValue(this.data.record.hours);
@@ -134,5 +134,5 @@ export class EditRecordDialogComponent implements OnInit {
 }
 
 export interface DialogData {
-  record: Record;
+  record: IRecord;
 }

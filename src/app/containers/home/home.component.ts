@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { FirebaseApisService } from '../../services/firebase-apis.service';
 
 // import models
-import { Record } from '../../models/firebase-entities.model';
+import { IRecord } from '../../models/firebase-entities.model';
 import { Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { RemoveRecordDialogComponent } from 'src/app/elements/remove-record-dialog/remove-record-dialog.component';
@@ -23,11 +23,11 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
-  records$: Observable<Record[]> = this.firebaseApi.getRecords();
+  records$: Observable<IRecord[]> = this.firebaseApi.getRecords();
   sortData(event: Sort) {
     this.records$ = this.firebaseApi.getRecords(event);
   }
-  openRemoveDialog(record: Record) {
+  openRemoveDialog(record: IRecord) {
     const dialogRef = this.dialog.open(RemoveRecordDialogComponent, {
       width: '400px',
       data: { record },
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
       console.log(`The dialog was closed with result ${result}`);
     });
   }
-  openEditDialog(record: Record) {
+  openEditDialog(record: IRecord) {
     const dialogRef = this.dialog.open(EditRecordDialogComponent, {
       width: '700px',
       data: { record },

@@ -7,11 +7,11 @@ import { Observable, from, of, combineLatest } from 'rxjs';
 import { exhaust, map, first, catchError, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
-  Company,
-  Project,
-  Record,
-  SaveRecord,
-  Task,
+  ICompany,
+  IProject,
+  IRecord,
+  ISaveRecord,
+  ITask,
 } from '../models/firebase-entities.model';
 import {
   AngularFirestore,
@@ -33,12 +33,12 @@ export class FirebaseApisService {
    * this method retrives list of companies
    * @param title
    */
-  public getCompanies(title: string = ''): Observable<Company[]> {
+  public getCompanies(title: string = ''): Observable<ICompany[]> {
     return this.firestore
-      .collection<Company>('companies')
+      .collection<ICompany>('companies')
       .valueChanges()
       .pipe(
-        map((companies: Company[]) =>
+        map((companies: ICompany[]) =>
           companies.filter((company) =>
             company.title.includes(title) ? company : null
           )
@@ -51,7 +51,7 @@ export class FirebaseApisService {
    */
   public getCompany(id: number) {
     return this.firestore
-      .collection<Company>('companies', (ref) => ref.where('id', '==', id))
+      .collection<ICompany>('companies', (ref) => ref.where('id', '==', id))
       .valueChanges()
       .pipe(exhaust(), first());
   }
@@ -63,12 +63,12 @@ export class FirebaseApisService {
   public getProjects(
     name: string = '',
     companyId: number = 0
-  ): Observable<Project[]> {
+  ): Observable<IProject[]> {
     return this.firestore
-      .collection<Project>('projects')
+      .collection<IProject>('projects')
       .valueChanges()
       .pipe(
-        map((projects: Project[]) => {
+        map((projects: IProject[]) => {
           projects = projects.filter((project) =>
             project.name.includes(name) ? project : null
           );
@@ -89,7 +89,7 @@ export class FirebaseApisService {
    */
   public getProject(id: number) {
     return this.firestore
-      .collection<Project>('projects', (ref) => ref.where('id', '==', id))
+      .collection<IProject>('projects', (ref) => ref.where('id', '==', id))
       .valueChanges()
       .pipe(exhaust(), first());
   }
@@ -97,12 +97,12 @@ export class FirebaseApisService {
    * this method retrives the list of tasks on firebase
    * @param title
    */
-  public getTasks(title: string = ''): Observable<Task[]> {
+  public getTasks(title: string = ''): Observable<ITask[]> {
     return this.firestore
-      .collection<Task>('tasks')
+      .collection<ITask>('tasks')
       .valueChanges()
       .pipe(
-        map((tasks: Task[]) =>
+        map((tasks: ITask[]) =>
           tasks.filter((task) => (task.name.includes(title) ? task : null))
         )
       );
@@ -112,33 +112,33 @@ export class FirebaseApisService {
    */
   public getTask(id: number) {
     return this.firestore
-      .collection<Task>('tasks', (ref) => ref.where('id', '==', id))
+      .collection<ITask>('tasks', (ref) => ref.where('id', '==', id))
       .valueChanges()
       .pipe(exhaust(), first());
   }
   /**
    * this methods retrives the list of records on firebase
    */
-  public getRecords(sort: Sort = null): Observable<Record[]> {
+  public getRecords(sort: Sort = null): Observable<IRecord[]> {
     return (this.firestore.collection('records', (ref) => {
       if (sort && sort.direction !== '') {
         return ref.orderBy(sort.active, sort.direction);
       } else {
         return ref;
       }
-    }) as AngularFirestoreCollection<Record>)
+    }) as AngularFirestoreCollection<IRecord>)
       .snapshotChanges()
       .pipe(
         catchError((err) => of([])),
         map((actions) => {
-          return (actions as DocumentChangeAction<Record>[]).map((action) => {
-            const data = action.payload.doc.data() as Record;
+          return (actions as DocumentChangeAction<IRecord>[]).map((action) => {
+            const data = action.payload.doc.data() as IRecord;
             const id = action.payload.doc.id;
             const record = { id, ...data };
             return record;
           });
         }),
-        switchMap((records: Record[]) => {
+        switchMap((records: IRecord[]) => {
           const projectIds = records.map((rc) => rc.projectId);
           const taskIds = records.map((rc) => rc.taskId);
           return combineLatest([
@@ -160,22 +160,24 @@ export class FirebaseApisService {
    * inserts a new record in records collection
    * @param record
    */
-  public saveRecord(record: SaveRecord): Observable<DocumentReference> {
+  public saveRecord(record: ISaveRecord): Observable<DocumentReference> {
     return from(this.firestore.collection('records').add(record));
   }
   /**
    * removes a record from records collection
    * @param record
    */
-  public removeRecord(record: Record): Observable<void> {
-    return from(this.firestore.doc<Record>(`records/${record.id}`).delete());
+  public removeRecord(record: IRecord): Observable<void> {
+    return from(this.firestore.doc<IRecord>(`records/${record.id}`).delete());
   }
   /**
    * updates the record in records collection based on record id
    * @param record
    */
-  public editRecord(record: Record): Observable<void> {
-    return from(this.firestore.doc<Record>(`records/${record.id}`).set(record));
+  public editRecord(record: IRecord): Observable<void> {
+    return from(
+      this.firestore.doc<IRecord>(`records/${record.id}`).set(record)
+    );
   }
 
   /**

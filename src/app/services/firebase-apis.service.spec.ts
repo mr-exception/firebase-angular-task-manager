@@ -5,7 +5,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../../environments/environment';
-import { Company, Project, Task } from '../models/firebase-entities.model';
+import { ICompany, IProject, ITask } from '../models/firebase-entities.model';
 import { of } from 'rxjs';
 
 const setup = () => {
@@ -40,7 +40,7 @@ describe('FirebaseApisService', () => {
    */
   it('should get companies', (done) => {
     // create mock data
-    const data: Company[] = [
+    const data: ICompany[] = [
       { id: 1, title: 'some title', description: 'some description' },
     ];
     const valueChangesMock = {
@@ -65,7 +65,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get companies with filter', (done) => {
     // create mock data
-    const data: Company[] = [
+    const data: ICompany[] = [
       { id: 1, title: 'some title', description: 'some description' },
       { id: 1, title: 'other title', description: 'some description' },
     ];
@@ -87,7 +87,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get empty companies list with filter', (done) => {
     // create mock data
-    const data: Company[] = [
+    const data: ICompany[] = [
       { id: 1, title: 'some title', description: 'some description' },
       { id: 1, title: 'other title', description: 'some description' },
     ];
@@ -110,7 +110,7 @@ describe('FirebaseApisService', () => {
    */
   it('should get projects', (done) => {
     // create mock data
-    const data: Project[] = [
+    const data: IProject[] = [
       {
         id: 1,
         name: 'some name',
@@ -141,7 +141,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get projects with companyId filter', (done) => {
     // create mock data
-    const data: Project[] = [
+    const data: IProject[] = [
       {
         id: 1,
         name: 'some name',
@@ -172,7 +172,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get projects with name filter', (done) => {
     // create mock data
-    const data: Project[] = [
+    const data: IProject[] = [
       {
         id: 1,
         name: 'some name',
@@ -203,7 +203,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get projects with name and companyId filter', (done) => {
     // create mock data
-    const data: Project[] = [
+    const data: IProject[] = [
       {
         id: 1,
         name: 'some name',
@@ -234,7 +234,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get project with id 1', (done) => {
     // create mock data
-    const data: Project[] = [
+    const data: IProject[] = [
       {
         id: 1,
         name: 'some name',
@@ -268,7 +268,7 @@ describe('FirebaseApisService', () => {
    */
   it('should get tasks', (done) => {
     // create mock data
-    const data: Task[] = [
+    const data: ITask[] = [
       {
         id: 1,
         name: 'some name',
@@ -297,7 +297,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get tasks', (done) => {
     // create mock data
-    const data: Task[] = [
+    const data: ITask[] = [
       {
         id: 1,
         name: 'some name',
@@ -326,7 +326,7 @@ describe('FirebaseApisService', () => {
   });
   it('should get task with id 3', (done) => {
     // create mock data
-    const data: Task[] = [
+    const data: ITask[] = [
       {
         id: 1,
         name: 'some name',
