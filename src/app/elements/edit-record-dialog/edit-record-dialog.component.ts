@@ -25,7 +25,7 @@ export class EditRecordDialogComponent implements OnInit {
     public firebaseApi: FirebaseApisService,
     public dialogRef: MatDialogRef<EditRecordDialogComponent>,
     public snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: IDialogData
   ) {}
   cancel() {
     this.dialogRef.close('canceled');
@@ -133,6 +133,6 @@ export class EditRecordDialogComponent implements OnInit {
   }
 }
 
-export interface DialogData {
+export interface IDialogData {
   record: IRecord;
 }

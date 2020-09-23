@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(EditRecordDialogComponent, {
       width: '700px',
       data: { record },
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -6,7 +6,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { By } from '@angular/platform-browser';
 
 import { RemoveRecordDialogComponent } from './remove-record-dialog.component';
-import { Record } from 'src/app/models/firebase-entities.model';
+import { IRecord } from 'src/app/models/firebase-entities.model';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
@@ -45,7 +45,7 @@ describe('RemoveRecordDialog', () => {
   });
 
   it('should create', () => {
-    const record: Record = {
+    const record: IRecord = {
       id: 'fakeid',
       projectId: 1,
       taskId: 1,
