@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from '../../app-routing.module';
 import { HomeComponent } from './home.component';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -15,6 +16,7 @@ describe('HomeComponent', () => {
       imports: [
         AngularFireModule.initializeApp(environment.firebase),
         RouterModule.forRoot(routes),
+        MatDialogModule,
       ],
     }).compileComponents();
     component = TestBed.inject(HomeComponent);
