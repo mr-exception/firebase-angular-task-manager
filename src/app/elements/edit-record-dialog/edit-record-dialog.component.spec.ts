@@ -3,11 +3,20 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { By } from '@angular/platform-browser';
 
 import { EditRecordDialogComponent } from './edit-record-dialog.component';
+import { Record } from 'src/app/models/firebase-entities.model';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { FirebaseApisService } from 'src/app/services/firebase-apis.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-describe('InformationDialog', () => {
+describe('EditRecordDialog', () => {
+  let service: FirebaseApisService;
+  let firebase;
+
   let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
 
@@ -15,7 +24,12 @@ describe('InformationDialog', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DialogTestModule],
+      imports: [
+        DialogTestModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        MatSnackBarModule,
+        MatAutocompleteModule,
+      ],
       providers: [
         {
           provide: OverlayContainer,
@@ -27,44 +41,39 @@ describe('InformationDialog', () => {
       ],
     });
 
-    dialog = TestBed.get(MatDialog);
-
+    dialog = TestBed.inject(MatDialog);
     noop = TestBed.createComponent(NoopComponent);
+
+    service = TestBed.inject(FirebaseApisService);
+    firebase = jasmine.createSpyObj('AngularFirestore', ['collection', 'doc']);
   });
 
-  it('shows information without details', () => {
-    // const config = {
-    //   data: {
-    //     title: 'User cannot be saved without an email',
-    //     details: [],
-    //   },
-    // };
-    // dialog.open(EditRecordDialogComponent, config);
+  it('should create', () => {
+    const record: Record = {
+      id: 'fakeid',
+      projectId: 1,
+      taskId: 1,
+      hours: 1,
+    };
+    dialog.open(EditRecordDialogComponent, { data: { record } });
 
-    // noop.detectChanges(); // Updates the dialog in the overlay
+    noop.detectChanges();
 
-    // const h2 = overlayContainerElement.querySelector('#mat-dialog-title-0');
-    // const button = overlayContainerElement.querySelector('button');
+    const caption = overlayContainerElement.querySelector(
+      '.mat-dialog-content > p'
+    );
+    expect(caption.textContent).toBe('Are you sure from deleting this record?');
 
-    // expect(h2.textContent).toBe('User cannot be saved without an email');
-    expect(true).toBe(true);
+    const cancelBtn = overlayContainerElement.querySelector(
+      '.mat-dialog-actions > button:nth-child(2)'
+    );
+    expect(cancelBtn.textContent).toBe('cancel');
+
+    const removeBtn = overlayContainerElement.querySelector(
+      '.mat-dialog-actions > button:nth-child(1)'
+    );
+    expect(removeBtn.textContent).toBe('remove');
   });
-
-  // it('shows an error message with some details', () => {
-  //   const config = {
-  //     data: {
-  //       title: 'Validation Error - Not Saved',
-  //       details: ['Need an email', 'Username already in use'],
-  //     },
-  //   };
-  //   dialog.open(EditRecordDialogComponent, config);
-
-  //   noop.detectChanges(); // Updates the dialog in the overlay
-
-  //   const li = overlayContainerElement.querySelectorAll('li');
-  //   expect(li.item(0).textContent).toContain('Need an email');
-  //   expect(li.item(1).textContent).toContain('Username already in use');
-  // });
 });
 
 // Noop component is only a workaround to trigger change detection
